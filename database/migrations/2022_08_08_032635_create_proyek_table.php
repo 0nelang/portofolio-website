@@ -22,7 +22,7 @@ class CreateProyekTable extends Migration
             $table->string('nama_proyek');
             $table->date('tanggal');
             $table->text('deskripsi');
-            $table->char('foto');
+            $table->char('foto')->nullable();
             $table->timestamps();
         });
     }
