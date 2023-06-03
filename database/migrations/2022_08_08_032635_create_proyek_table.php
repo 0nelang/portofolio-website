@@ -15,13 +15,9 @@ class CreateProyekTable extends Migration
     {
         Schema::create('proyek', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_siswa')->unsigned();
-            $table->foreign('id_siswa')->references('id')->on('siswa')
-                    ->onUpdate('cascade')
-                    ->onDelete('cascade');
-            $table->string('nama_proyek');
-            $table->date('tanggal');
-            $table->text('deskripsi');
+            $table->string('name')->nullable();
+            $table->string('category')->nullable();
+            $table->string('link')->nullable();
             $table->char('foto')->nullable();
             $table->timestamps();
         });

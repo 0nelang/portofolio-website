@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('dashboard/siswa', SiswaController::class);
     Route::resource('/dashboard/kontak', KontakController::class);
     Route::resource('/dashboard/project', ProjectController::class);
+    Route::get('dashboard/biodata',[SiswaController::class,'biodata'])->name('biodata');
+    Route::post('dashboard/biodata/create/{id}', [SiswaController::class, 'biodata_create'])->name('biodata.store');
     Route::get('dashboard/project/create/{id}', [ProjectController::class, 'create'])->name('createproject.create');
 });
 

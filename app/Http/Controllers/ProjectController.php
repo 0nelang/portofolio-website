@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Proyek;
+use App\Models\User;
 use App\Models\siswa;
-use Illuminate\Auth\Events\Validated;
+use App\Models\Proyek;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -22,7 +24,8 @@ class ProjectController extends Controller
     public function index()
     {
         return view("dashboard.project.projectmaster", [
-            "data" => siswa::all()
+            "data" => proyek::all(),
+            "user" => User::find(1)
         ]);
     }
 
@@ -31,10 +34,10 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create()
     {
-        return view("dashboard.project.projectcreate", [
-            "siswa" => siswa::find($id)
+        return view("dashboard.project.projectcreate",[
+            "user" => User::find(1)
         ]);
     }
 
@@ -46,17 +49,14 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "nama_project" => "required",
-            "deskripsi" => "required",
-            "tanggal" => "required"
+        $validated = $request->validate([
+            "name" => "required",
+            "category" => "required",
+            "link" => "required",
+            "foto" => "required"
         ]);
-        Proyek::create([
-            'id_siswa' => $request->id_siswa,
-            'nama_proyek' => $request->nama_project,
-            'deskripsi' => $request->deskripsi,
-            'tanggal' => $request->tanggal,
-        ]);
+        $validated['foto'] = $request->file('foto')->store('gambar_project', ['disk' => 'public']);
+        Proyek::create($validated);
 
         return redirect()->route('project.index')->with('pesan', 'Project baru berhasil ditambahkan ! ');
     }

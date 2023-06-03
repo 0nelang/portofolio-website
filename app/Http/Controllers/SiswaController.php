@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Experiance;
+use App\Models\User;
 use App\Models\siswa;
+use App\Models\Language;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +23,8 @@ class SiswaController extends Controller
     public function index()
     {
         return view("dashboard.siswa.siswamaster", [
-            "data" => siswa::all()
+            "user" => User::find(1),
+            "data"=> Experiance::all(),
         ]);
     }
 
@@ -34,7 +38,9 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return view("dashboard.siswa.siswacreate");
+        return view("dashboard.siswa.siswacreate",[
+            "user" => User::find(1)
+        ]);
     }
 
     /**
@@ -48,27 +54,15 @@ class SiswaController extends Controller
         // dd($request);
         $message = [
             'required' => ':attribute harus diisi dulu bro!!',
-            'email' => ':attribute harus email yang bener bro!!, contoh = email@email.email',
-            'nama.min' => ':attribute minimal 5 bang',
-            'nisn.min' => ':attribute minimal isi 6 lah',
-            'nisn.max' => ':attribute maximal 12,ojk akeh akeh',
-            'unique' => ':attribute harus unik bang',
-            'digits_between' => ':attribute minimal panjang 6,maximal panjang 12',
         ];
 
         $validated = $request->validate([
-            "nama" => "required|min:5",
-            "about" => "required",
-            "email" => "required|email|unique:siswa",
-            "jenis_kelamin" => "required",
-            "alamat" => "required",
-            "nisn" => "required|numeric|digits_between:6,12",
-            "foto" => "required|image|file",
+            'title'=>'required',
+            'place'=>'required',
+            'year'=>'required',
+            'about'=>'required'
         ],$message);
-        // dd($request);
-
-        $validated['foto'] = $request->file('foto')->store('gambar_siswa', ['disk' => 'public']);
-        $article = siswa::create($validated);
+        Experiance::create($validated);
 
         return redirect()->route('siswa.index');
     }
@@ -162,5 +156,68 @@ class SiswaController extends Controller
         Storage::disk('public')->delete($homeImg->foto);
         Siswa::destroy($homeImg->id);
         return redirect()->back();
+    }
+
+    public function biodata()
+    {
+        return view('dashboard.biodata',[
+            "user" => User::find(1),
+            "languages" => Language::all()
+        ]);
+    }
+
+    public function biodata_create(Request $request, $id)
+    {
+        $user = User::find($id);
+        $message = [
+            'required' => ':attribute harus diisi dulu bro!!',
+            'email' => ':attribute harus email yang bener bro!!, contoh = email@email.email',
+            'name.min' => ':attribute minimal 5 bang',
+            'nisn.min' => ':attribute minimal isi 6 lah',
+            'nisn.max' => ':attribute maximal 12,ojk akeh akeh',
+            'unique' => ':attribute harus unik bang',
+            'digits_between' => ':attribute minimal panjang 6,maximal panjang 12',
+        ];
+        if ($request->email == $user->email) {
+            $validated = $request->validate([
+                "name" => "required",
+                "title" => "required",
+                "alamat" => "required",
+                "phone" => "required",
+                "facebook" => "min:0",
+                "instagram" => "min:0",
+                "github" => "min:0",
+                "linkedin" => "min:0",
+                "about" => "min:0",
+                "email" => "required|email",
+            ],$message);
+        } else {
+            $validated = $request->validate([
+                "name" => "required",
+                "title" => "required",
+                "alamat" => "required",
+                "phone" => "required",
+                "facebook" => "min:0",
+                "instagram" => "min:0",
+                "github" => "min:0",
+                "linkedin" => "min:0",
+                "about" => "min:0",
+                "email" => "required|email|unique:users",
+            ],$message);
+        }
+        // dd($request);
+        Language::truncate();
+        if ($request->language) {
+            foreach ($request->language as $value) {
+                Language::create(['language'=>$value]);
+            }
+        }
+        if ($request->file('foto')) {
+            $validated['foto'] = $request->file('foto')->store('gambar_user', ['disk' => 'public']);
+            Storage::disk('public')->delete($user->foto);
+        }
+        $user->update($validated);
+
+        return redirect()->route('biodata');
     }
 }

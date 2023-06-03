@@ -1,11 +1,11 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/dashboard/biodata">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">Dashboard</div>
     </a>
 
     <!-- Divider -->
@@ -13,11 +13,16 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item">
-        <a class="nav-link" href="{{ route("siswa.index") }}">
+        <a class="nav-link" href="{{ route("biodata") }}">
             <i class="fas fa-user"></i>
-            <span>Siswa</span></a>
+            <span>Biodata</span></a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="{{ route("siswa.index") }}">
+            <i class="fas fa-user"></i>
+            <span>experience</span></a>
+    </li>
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
@@ -30,7 +35,7 @@
                 <a class="collapse-item" href="{{ route("kontak.index") }}">Kontak Jenis</a>
             </div>
         </div>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link" href="{{ route("project.index") }}">
             <i class="fas fa-user"></i>

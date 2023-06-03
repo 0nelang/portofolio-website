@@ -19,7 +19,6 @@
             </a>
         </div>
         @endadmin
-
       </div>
       <span class="badge bg-primary rounded-pill" style="color: white;">{{ $item->tanggal }}</span>
     </li>

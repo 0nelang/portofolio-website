@@ -16,22 +16,18 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>NISN</th>
-                            <th>Foto</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Email</th>
+                            <th>Title</th>
+                            <th>Place</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
-                            <th>NISN</th>
-                            <th>Foto</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Email</th>
+                            <th>Title</th>
+                            <th>Place</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                     </tfoot>
@@ -39,17 +35,10 @@
                         @foreach ($data as $index => $item)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->nisn }}</td>
-                            <td><img onclick="image()" src="{{ asset('storage/' . $item->foto) }}"
-                                style="height: 200px; width:200px; object-fit:cover"></td>
-                            <td>{{ $item->jenis_kelamin }}</td>
-                            <td>{{ $item->email }}</td>
+                            <td>{{ $item->title }}</td>
+                            <td>{{ $item->place }}</td>
+                            <td>{{ $item->year }}</td>
                             <td>
-                                <a href="{{ route('siswa.show', ['siswa' => $item->id]) }}" class="btn btn-primary btn-circle btn-sm">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                @admin
                                 <a href="{{ route('siswa.edit', ['siswa' => $item->id]) }}" class="btn btn-warning btn-circle btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
@@ -62,7 +51,6 @@
                                 <a href="#" onclick="what({{ $item->id }})" class="btn btn-danger btn-circle btn-sm">
                                     <i class="fas fa-skull-crossbones"></i>
                                 </a>
-                                @endadmin
                             </td>
                         </tr>
                         @endforeach

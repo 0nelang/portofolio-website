@@ -1,64 +1,59 @@
 @extends('dashboard.app')
 @section('title', 'project')
 @section('content')
+<h1 class="h3 mb-2 text-gray-800">MY PROJECT</h1>
 
-
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Data Siswa</h6>
-            </div> {{-- card header --}}
-            <div class="card-body">
-
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            @admin
+            <a href="{{ route('project.create') }}" class="btn btn-success">Tambah Data</a>
+            @endadmin
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>NO</th>
-                            <th>NAMA</th>
-                            <th>ACTION</th>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php $a = 1 ; ?>
-                        @foreach ($data as $item)
+                    <tfoot>
                         <tr>
-                            <td>{{ $a++; }}</td>
-                            <td>{{ $item->nama; }}</td>
+                            <th>No</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach ($data as $index => $item)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $item->name }}</td>
+                            <td>{{ $item->category }}</td>
                             <td>
-                                <a class="btn btn-primary" onclick="show('{{ $item->id}}')"><i class="fas fa-folder-open"></i></a>
-                                @admin
-                                <a class="btn btn-success" href="{{ route('createproject.create' ,$item->id)  }}"><i class="fas fa-plus"></i></a>
-                                @endadmin
+                                <a href="{{ route('siswa.edit', ['siswa' => $item->id]) }}" class="btn btn-warning btn-circle btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form id="form-delete{{ $item->id }}"
+                                    action="{{ route('siswa.destroy', ['siswa' => $item->id]) }}"
+                                    method="post" style="display: none">
+                                    @method('delete')
+                                    @csrf
+                                </form>
+                                <a href="#" onclick="what({{ $item->id }})" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fas fa-skull-crossbones"></i>
+                                </a>
                             </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
-
-            </div> {{-- card body --}}
-        </div> {{-- card --}}
-    </div> {{-- col-lg-6 --}}
-    <div class="col-lg-6">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Project Siswa</h6>
-            </div> {{-- card header --}}
-            <div class="card-body" style="text-align: center" id="project">
-               Tidak ada project yang bisa di tampilkan
-            </div> {{-- card body --}}
-        </div> {{-- card --}}
-    </div> {{-- col-lg-6 --}}
-</div> {{-- row --}}
-
-<script>
-    function show(id){
-        $.get('/dashboard/project/'+id ,function(data){
-            $('#project').html(data)
-        })
-    }
-</script>
-
-
-
+            </div>
+        </div>
+    </div>
 @endsection

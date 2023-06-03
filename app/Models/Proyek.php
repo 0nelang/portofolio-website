@@ -10,9 +10,9 @@ class Proyek extends Model
     use HasFactory;
     protected $fillable = [
         'id_siswa',
-        'nama_proyek',
-        'tanggal',
-        'deskripsi',
+        'name',
+        'category',
+        'link',
         'foto',
     ];
     protected $table = "proyek";
