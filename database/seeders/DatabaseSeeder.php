@@ -27,5 +27,9 @@ class DatabaseSeeder extends Seeder
             'role' => 'walikelas',
             'password' => '$2y$10$cJljZ8BeVZIEF6eVmePioODQtncD2FQwEJeKTFxDqgLRuqzr8qL12'
         ]);
+        $this->call(ExperiancesTableSeeder::class);
+        $this->call(LanguagesTableSeeder::class);
+        $this->call(ProyekTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
     }
 }

@@ -25,12 +25,6 @@
                             <a class="nav-link" href="#mh-portfolio">Portfolio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#mh-pricing">Pricing</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#mh-blog">Blog</a>
-                        </li>
-                        <li class="nav-item">
                            <a class="nav-link" href="#mh-contact">Contact</a>
                         </li>
                     </ul>
